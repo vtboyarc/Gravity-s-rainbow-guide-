@@ -95,29 +95,6 @@ header h1 {
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(15, 23, 42, 0.15);
 }
-.part-nav {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.25rem;
-  margin: 0 -0.5rem;
-  padding-inline: 0.5rem;
-}
-.part-nav a {
-  flex: 0 0 auto;
-  padding: 0.4rem 0.9rem;
-  background: rgba(10, 88, 202, 0.08);
-  border-radius: 999px;
-  font-weight: 600;
-  color: #0f172a;
-  text-decoration: none;
-  border: 1px solid transparent;
-}
-.part-nav a:focus-visible,
-.part-nav a:hover {
-  border-color: rgba(10, 88, 202, 0.4);
-  background: rgba(10, 88, 202, 0.16);
-}
 #search-results {
   font-size: 0.9rem;
   color: var(--muted);
@@ -308,12 +285,6 @@ details[hidden] {
       <button type="button" data-action="collapse" class="secondary">Collapse all</button>
     </div>
   </div>
-  <nav class="part-nav" aria-label="Navigate by part">
-    <a href="#part-1">Part 1</a>
-    <a href="#part-2">Part 2</a>
-    <a href="#part-3">Part 3</a>
-    <a href="#part-4">Part 4</a>
-  </nav>
   <div id="search-results" aria-live="polite"></div>
 </header>
 <main id="content">
