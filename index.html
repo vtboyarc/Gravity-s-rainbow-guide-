@@ -70,31 +70,6 @@ header h1 {
   height: 1.1rem;
   color: var(--muted);
 }
-.action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.action-buttons button {
-  flex: 1 1 9rem;
-  background: var(--b);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 0.55rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-.action-buttons button.secondary {
-  background: #e2e8f0;
-  color: #0f172a;
-}
-.action-buttons button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(15, 23, 42, 0.15);
-}
 #search-results {
   font-size: 0.9rem;
   color: var(--muted);
@@ -249,12 +224,6 @@ details[hidden] {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }
-  .action-buttons {
-    justify-content: flex-end;
-  }
-  .action-buttons button {
-    flex: 0 0 auto;
-  }
 }
 @media (min-width: 900px) {
   main {
@@ -280,10 +249,6 @@ details[hidden] {
         <line x1="20" y1="20" x2="16.65" y2="16.65"></line>
       </svg>
     </label>
-    <div class="action-buttons">
-      <button type="button" data-action="expand">Expand all</button>
-      <button type="button" data-action="collapse" class="secondary">Collapse all</button>
-    </div>
   </div>
   <div id="search-results" aria-live="polite"></div>
 </header>
@@ -1168,8 +1133,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const chapters = Array.from(document.querySelectorAll('.chapter'));
   const searchInput = document.getElementById('search');
   const searchResults = document.getElementById('search-results');
-  const expandButton = document.querySelector('[data-action="expand"]');
-  const collapseButton = document.querySelector('[data-action="collapse"]');
   const backToTop = document.getElementById('backToTop');
   const main = document.getElementById('content');
   const noResults = document.createElement('div');
@@ -1195,32 +1158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     noResults.hidden = true;
   };
-
-  const setAll = (open) => {
-    parts.forEach(part => {
-      part.open = open;
-      part.style.display = '';
-    });
-    chapters.forEach(chapter => {
-      chapter.open = open;
-      chapter.style.display = '';
-    });
-    noResults.hidden = true;
-    if (searchInput) {
-      searchInput.value = '';
-    }
-    if (searchResults) {
-      searchResults.textContent = '';
-    }
-  };
-
-  expandButton?.addEventListener('click', () => {
-    setAll(true);
-  });
-
-  collapseButton?.addEventListener('click', () => {
-    setAll(false);
-  });
 
   const filterChapters = (value) => {
     const query = value.trim().toLowerCase();
