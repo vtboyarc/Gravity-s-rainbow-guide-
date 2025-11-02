@@ -32,47 +32,10 @@ header {
   padding: 1rem clamp(1rem, 3vw, 2rem);
   z-index: 10;
   box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
 }
 header h1 {
   margin: 0;
   font-size: clamp(1.35rem, 2.5vw + 1rem, 2.25rem);
-}
-.controls {
-  display: grid;
-  gap: 0.75rem;
-}
-.search-group {
-  position: relative;
-}
-.search-group input[type="search"] {
-  width: 100%;
-  padding: 0.65rem 2.5rem 0.65rem 0.9rem;
-  border: 1px solid var(--bd);
-  border-radius: 999px;
-  font-size: 1rem;
-  background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.search-group input[type="search"]:focus {
-  outline: none;
-  border-color: var(--b);
-  box-shadow: 0 0 0 4px rgba(10, 88, 202, 0.15);
-}
-.search-group svg {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1.1rem;
-  height: 1.1rem;
-  color: var(--muted);
-}
-#search-results {
-  font-size: 0.9rem;
-  color: var(--muted);
 }
 main {
   padding: clamp(1rem, 4vw, 2.25rem) clamp(1rem, 4vw, 2rem) 3rem;
@@ -177,25 +140,8 @@ main {
 .source .text p + p {
   margin-top: 0.75rem;
 }
-.no-results {
-  padding: 1.25rem;
-  text-align: center;
-  color: var(--muted);
-  font-style: italic;
-}
 details[hidden] {
   display: none !important;
-}
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 #backToTop {
   position: fixed;
@@ -219,12 +165,6 @@ details[hidden] {
   pointer-events: auto;
   transform: translateY(0);
 }
-@media (min-width: 640px) {
-  .controls {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
-}
 @media (min-width: 900px) {
   main {
     max-width: 980px;
@@ -240,17 +180,6 @@ details[hidden] {
 <body>
 <header>
   <h1>Gravity's Rainbow — Combined Guides</h1>
-  <div class="controls">
-    <label class="search-group" for="search">
-      <span class="sr-only">Search chapters and guide notes</span>
-      <input type="search" id="search" name="search" placeholder="Search chapters or notes…" autocomplete="off">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="7"></circle>
-        <line x1="20" y1="20" x2="16.65" y2="16.65"></line>
-      </svg>
-    </label>
-  </div>
-  <div id="search-results" aria-live="polite"></div>
 </header>
 <main id="content">
 <details id="part-1" class="part"><summary><span class="part-title">Part 1</span> — Beyond the Zero</summary>
@@ -1129,76 +1058,7 @@ details[hidden] {
 <button type="button" id="backToTop" aria-label="Back to top">Back to top</button>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const parts = Array.from(document.querySelectorAll('.part'));
-  const chapters = Array.from(document.querySelectorAll('.chapter'));
-  const searchInput = document.getElementById('search');
-  const searchResults = document.getElementById('search-results');
   const backToTop = document.getElementById('backToTop');
-  const main = document.getElementById('content');
-  const noResults = document.createElement('div');
-  noResults.className = 'no-results';
-  noResults.textContent = 'No chapters match your search yet.';
-  noResults.hidden = true;
-  main.appendChild(noResults);
-
-  parts.forEach(part => part.dataset.initialOpen = part.open ? 'true' : 'false');
-  chapters.forEach(chapter => chapter.dataset.initialOpen = chapter.open ? 'true' : 'false');
-
-  const resetDisplay = () => {
-    chapters.forEach(chapter => {
-      chapter.style.display = '';
-      chapter.open = chapter.dataset.initialOpen === 'true';
-    });
-    parts.forEach(part => {
-      part.style.display = '';
-      part.open = part.dataset.initialOpen === 'true';
-    });
-    if (searchResults) {
-      searchResults.textContent = '';
-    }
-    noResults.hidden = true;
-  };
-
-  const filterChapters = (value) => {
-    const query = value.trim().toLowerCase();
-    if (!query) {
-      resetDisplay();
-      return;
-    }
-
-    let matches = 0;
-    chapters.forEach(chapter => {
-      const text = chapter.textContent.toLowerCase();
-      const match = text.includes(query);
-      if (match) {
-        chapter.style.display = '';
-        chapter.open = true;
-        const parentPart = chapter.closest('.part');
-        if (parentPart) {
-          parentPart.open = true;
-          parentPart.style.display = '';
-        }
-        matches += 1;
-      } else {
-        chapter.style.display = 'none';
-      }
-    });
-
-    parts.forEach(part => {
-      const visible = Array.from(part.querySelectorAll('.chapter')).some(ch => ch.style.display !== 'none');
-      part.style.display = visible ? '' : 'none';
-    });
-
-    if (searchResults) {
-      searchResults.textContent = matches ? `${matches} match${matches === 1 ? '' : 'es'} found` : 'No matches found';
-    }
-    noResults.hidden = matches > 0;
-  };
-
-  searchInput?.addEventListener('input', (event) => {
-    filterChapters(event.target.value || '');
-  });
-
   window.addEventListener('scroll', () => {
     if (!backToTop) return;
     if (window.scrollY > 400) {
