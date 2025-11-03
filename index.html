@@ -160,6 +160,24 @@ details[hidden] {
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
+.site-footer {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 2.5rem clamp(1rem, 4vw, 2rem);
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.site-footer a {
+  color: #94c0ff;
+  font-weight: 600;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  text-decoration: underline;
+}
 #backToTop.show {
   opacity: 1;
   pointer-events: auto;
@@ -1055,6 +1073,14 @@ details[hidden] {
 </details>
 </details>
 </main>
+<footer class="site-footer">
+  <p>
+    Guide summaries sourced from
+    <a href="https://www.ottosell.de/pynchon/rainbow.htm" rel="noopener noreferrer" target="_blank">Concise Guide</a>
+    and
+    <a href="https://www.gravitysrainbowguide.com" rel="noopener noreferrer" target="_blank">Detailed Guide</a>.
+  </p>
+</footer>
 <button type="button" id="backToTop" aria-label="Back to top">Back to top</button>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
